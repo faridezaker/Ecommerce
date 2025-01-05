@@ -29,8 +29,9 @@ class AuthController extends Controller
             if (auth()->attempt($request->validated())) {
                 $user = auth()->user();
                 $token = JWTAuth::fromUser($user);
+                $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser($user);
             }
-            return self::success(['user' => new UserResource($user),'token' => $token],'ورود با موفقیت انجام شد');
+            return self::success(['user' => new UserResource($user),'token' => $token, 'refresh_token' => $refreshToken],'ورود با موفقیت انجام شد');
         }catch (\Exception $e){
             return self::error(401,'اطلاعات ورود اشتباه است');
         }
@@ -46,5 +47,13 @@ class AuthController extends Controller
         }
     }
 
-
+    public function refresh()
+    {
+        try {
+            $newToken = auth()->refresh();
+            return self::success(['access_token' => $newToken,'token_type' => 'bearer','expires_in' => auth()->factory()->getTTL() * 60]);
+        } catch (\Exception $e) {
+            return self::error(401,'به توکن جدید دسترسی ندارید');
+        }
+    }
 }

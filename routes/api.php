@@ -9,5 +9,6 @@ Route::prefix('v1')->name('v1.')->group(function () {
         Route::post('register', 'register');
         Route::post('login', 'login');
         Route::post('logout', 'logout')->middleware('auth:api');
+        Route::post('refresh', 'refresh')->middleware('auth:api');
     });
 });
