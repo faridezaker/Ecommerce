@@ -5,7 +5,7 @@ namespace App\Http\Requests\V1\Auth;
 use App\Rules\MobileRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class MobileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
-            'mobile' => ['required','min:11','max:11','unique:users,mobile',new MobileRule()]
+            'mobile' => ['required','min:11','max:11','exists:users,mobile',new MobileRule()]
         ];
     }
 }

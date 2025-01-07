@@ -10,5 +10,7 @@ Route::prefix('v1')->name('v1.')->group(function () {
         Route::post('login', 'login');
         Route::post('logout', 'logout')->middleware('auth:api');
         Route::post('refresh', 'refresh')->middleware('auth:api');
+        Route::post('send-otp', 'sendOtp');
+        Route::post('verify-otp', 'verifyOtp');
     });
 });
