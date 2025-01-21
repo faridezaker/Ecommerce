@@ -23,8 +23,8 @@ class VerifyOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otp' => 'required|digits:6',
-            'cellphone' => ['required','min:11','max:11','exists:users,cellphone',new MobileRule()]
+            'otp' => 'required|digits:6|exists:tokens,code',
+            'token' => 'required|exists:tokens,token',
         ];
     }
 }

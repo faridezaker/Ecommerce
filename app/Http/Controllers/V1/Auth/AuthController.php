@@ -108,7 +108,6 @@ class AuthController extends Controller
     {
         try {
             $validated = $request->validated();
-            $cellphone = $validated['cellphone'];
             $otp = $validated['otp'];
             $existOTP = Token::where('code', $otp)->first();
 
@@ -116,8 +115,8 @@ class AuthController extends Controller
                 return self::error(401,'Invalid or expired OTP');
             }
 
-            $user = User::where('cellphone',$cellphone)->first();
-            $accessToken = JWTAuth::fromUser($user);
+            $user = User::where('id',$existOTP->user_id)->first();
+            $accessToken = $request->validated()['token'];
             return self::success(['user' => new UserResource($user),'access_token' => $accessToken],'ورود با موفقیت انجام شد');
         }catch (\Exception $e){
             return self::error(500);
