@@ -110,9 +110,9 @@ class AuthController extends Controller
             $validated = $request->validated();
             $cellphone = $validated['cellphone'];
             $otp = $validated['otp'];
-            $CashOTP = Cache::get($otp.'_'.$cellphone);
+            $existOTP = Token::where('code', $otp)->first();
 
-            if(!$CashOTP || $CashOTP != $otp){
+            if(!$existOTP || $existOTP->code != $otp){
                 return self::error(401,'Invalid or expired OTP');
             }
 
