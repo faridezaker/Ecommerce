@@ -5,7 +5,7 @@ namespace App\Http\Requests\V1\Auth;
 use App\Rules\MobileRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MobileRequest extends FormRequest
+class SendOtpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class MobileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mobile' => ['required','min:11','max:11','exists:users,mobile',new MobileRule()]
+            'cellphone' => ['required','min:11','max:11',new MobileRule()]
         ];
     }
 }

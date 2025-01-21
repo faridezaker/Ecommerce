@@ -24,7 +24,7 @@ class VerifyOtpRequest extends FormRequest
     {
         return [
             'otp' => 'required|digits:6',
-            'mobile' => ['required','min:11','max:11','exists:users,mobile',new MobileRule()]
+            'cellphone' => ['required','min:11','max:11','exists:users,cellphone',new MobileRule()]
         ];
     }
 }
