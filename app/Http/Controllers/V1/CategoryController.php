@@ -8,7 +8,6 @@ use App\Http\Requests\V1\Category\UpdateCategoryRequest;
 use App\Http\Resources\V1\CategoryResource;
 use App\Models\Category;
 
-
 class CategoryController extends Controller
 {
     /**
@@ -57,5 +56,15 @@ class CategoryController extends Controller
     {
         $category->delete();
         return self::success(null,'Category deleted successfully.');
+    }
+
+    public function children(Category $category)
+    {
+        return self::success(new CategoryResource($category->load('children')));
+    }
+
+    public function parent(Category $category)
+    {
+        return self::success(new CategoryResource($category->load('parent')));
     }
 }
