@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\V1\BrandController;
+use App\Http\Controllers\V1\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +15,7 @@ Route::prefix('v1')->name('v1.')->group(function () {
         Route::post('send-otp', 'sendOtp');
         Route::post('verify-otp', 'verifyOtp');
     });
+
+    Route::apiResource('brands',  BrandController::class);
+    Route::apiResource('categories', CategoryController::class);
 });

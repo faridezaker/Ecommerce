@@ -12,9 +12,6 @@ use App\Jobs\SendOtpSmsJob;
 use App\Models\Token;
 use App\Models\User;
 use Carbon\Carbon;
-use Ghasedak\GhasedakApi;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
