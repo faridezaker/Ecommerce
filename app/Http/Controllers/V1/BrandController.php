@@ -7,6 +7,7 @@ use App\Http\Requests\V1\Brand\StoreBrandRequest;
 use App\Http\Requests\V1\Brand\UpdateBrandRequest;
 use App\Http\Resources\V1\BrandResource;
 use App\Models\Brand;
+use App\Services\CategoryService;
 
 class BrandController extends Controller
 {
@@ -15,6 +16,7 @@ class BrandController extends Controller
      */
     public function index()
     {
+
         $brands = Brand::paginate(10);
         return self::success([
             'brands' => BrandResource::collection($brands),

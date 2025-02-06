@@ -7,15 +7,22 @@ use App\Http\Requests\V1\Category\StoreCategoryRequest;
 use App\Http\Requests\V1\Category\UpdateCategoryRequest;
 use App\Http\Resources\V1\CategoryResource;
 use App\Models\Category;
+use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $CategoryService;
+    public function __construct(CategoryService $CategoryService)
+    {
+        return $this->CategoryService = $CategoryService;
+    }
+
     public function index()
     {
-        $categories = Category::paginate(10);
+        $categories = $this->CategoryService->getAll();
         return self::success([
            'categories' => CategoryResource::collection($categories),
             'links'=> CategoryResource::collection($categories)->response()->getData()->links,
@@ -28,7 +35,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $storeCategoryRequest)
     {
-        $category = Category::create($storeCategoryRequest->validated());
+        $category = $this->CategoryService->store($storeCategoryRequest->validated());
         return self::success(new CategoryResource($category),'Category created successfully.');
     }
 
@@ -45,7 +52,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $category = $this->CategoryService->update($request->validated(),$category);
         return self::success(new CategoryResource($category),'Category updated successfully.');
     }
 
@@ -54,7 +61,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+       $this->CategoryService->delete($category);
         return self::success(null,'Category deleted successfully.');
     }
 
