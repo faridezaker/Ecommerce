@@ -2,7 +2,7 @@
 
 namespace App\Repositories\InterfaceRepository;
 
-interface BaseCrudeRepositoryInterface
+interface BaseCrudRepositoryInterface
 {
     public function getAll();
 

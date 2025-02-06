@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Repositories\InterfaceRepository\BaseCrudeRepositoryInterface;
+use App\Repositories\InterfaceRepository\BaseCrudRepositoryInterface;
 
-class BaseCrudRepository implements BaseCrudeRepositoryInterface
+class BaseCrudRepository implements BaseCrudRepositoryInterface
 {
     protected $model;
 
