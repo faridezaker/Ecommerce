@@ -7,17 +7,23 @@ use App\Http\Requests\V1\Brand\StoreBrandRequest;
 use App\Http\Requests\V1\Brand\UpdateBrandRequest;
 use App\Http\Resources\V1\BrandResource;
 use App\Models\Brand;
-use App\Services\CategoryService;
+use App\Services\BrandService;
+
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $BrandService;
+    public function __construct(BrandService $BrandService)
+    {
+        return $this->BrandService = $BrandService;
+    }
     public function index()
     {
 
-        $brands = Brand::paginate(10);
+        $brands = $this->BrandService->getAll();
         return self::success([
             'brands' => BrandResource::collection($brands),
             'links'=>BrandResource::collection($brands)->response()->getData()->links,
@@ -30,9 +36,7 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        $validated = $request->validated();
-        $brand = Brand::create($validated);
-
+        $brand = $this->BrandService->store($request->validated());
         return self::success(new BrandResource($brand),'Brand created successfully.');
     }
 
@@ -49,7 +53,9 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        $brand->update($request->validated());
+        $brand = $this->BrandService->update($request->validated(),$brand);
+
+
         return self::success(new BrandResource($brand),'Brand updated successfully.');
     }
 
@@ -58,7 +64,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        $brand->delete();
+        $this->BrandService->destroy($brand);
         return self::success(null,'Brand deleted successfully.');
     }
 }

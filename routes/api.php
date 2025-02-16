@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\V1\BrandController;
 use App\Http\Controllers\V1\CategoryController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\V1\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->name('v1.')->group(function () {
@@ -20,4 +20,6 @@ Route::prefix('v1')->name('v1.')->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::get('categories/{category}/children',[CategoryController::class,'children']);
     Route::get('categories/{category}/parent',[CategoryController::class,'parent']);
+
+    Route::apiResource('products', ProductController::class);
 });

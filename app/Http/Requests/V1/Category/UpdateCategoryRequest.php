@@ -24,6 +24,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         $category = Category::where('id',$this->input('id'))->orWhere('slug',$this->input('slug'))->first();
+
         return[
             'parent_id' => 'required|integer|min:0',
             'name' => 'required|string|max:255',
@@ -36,9 +37,9 @@ class UpdateCategoryRequest extends FormRequest
             'is_active'   => 'boolean',
             'icon'        => 'nullable|string|max:255',
         ];
-       
+
     }
-   
+
     protected function withValidator($validator)
     {
         $validator->sometimes('parent_id', ['exists:categories,id'], function ($input) {

@@ -24,14 +24,14 @@ class UpdateBrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        $brand = Brand::where('id', $this->input('id'))->orWhere('slug', $this->input('slug'))->first();
-        Log::info('Brand Data:', ['brand' => $brand]);
+        $brand = $this->route('brand');
+
         return [
             'name' => 'required|string',
             'slug' => [
                 'string',
                 'max:255',
-                Rule::unique('brands', 'slug')->ignore(optional($brand)->id)
+                Rule::unique('brands', 'slug')->ignore($brand->id),
             ],
             'is_active' => 'boolean',
         ];
